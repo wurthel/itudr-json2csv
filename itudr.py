@@ -26,7 +26,7 @@ def run():
 
     incap_file = open("interested_course_and_professors.csv", "w", newline='')
     incap_csv = csv.writer(incap_file)
-    incap_csv.writerow(["interested_course_id", "professor"])
+    incap_csv.writerow(["interested_course_id", "professor", "semester", "year"])
 
     for iteration, ids in enumerate(grouped_ids):
         print(f"Current ids: {ids} (group num {iteration}/{len(grouped_ids)})")
@@ -41,7 +41,7 @@ def run():
 
             professors = tasks[2 * i + 1].get()
             for professor in professors:
-                incap_csv.writerow([course_id, professor["instructor"]])
+                incap_csv.writerow([course_id, professor["instructor"],professor["semester"], professor["year"]])
                 incap_file.flush()
 
 
