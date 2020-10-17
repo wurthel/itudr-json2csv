@@ -29,7 +29,7 @@ def run():
     incap_csv.writerow(["interested_course_id", "professor"])
 
     for iteration, ids in enumerate(grouped_ids):
-        print(f"Current ids: {ids} (iteration {iteration})")
+        print(f"Current ids: {ids} (group num {iteration}/{len(grouped_ids)})")
         tasks = []
         for id in ids:
             tasks.append(download_departments.delay(id))
