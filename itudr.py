@@ -8,7 +8,7 @@ from celery import Celery, shared_task
 
 load_dotenv()
 
-app = Celery('main', broker=os.environ['CELERY_BROKER_URL'])
+app = Celery('itudr', broker=os.environ['CELERY_BROKER_URL'])
 
 
 def run():
@@ -20,15 +20,16 @@ def run():
     n = 5
     grouped_ids = [courses_ids[i:i + n] for i in range(0, len(courses_ids), n)]
 
-    cad_file = open("courses_and_departments.csv", "w")
+    cad_file = open("courses_and_departments.csv", "w", newline='')
     cad_csv = csv.writer(cad_file)
     cad_csv.writerow(["course_id", "department"])
 
-    incap_file = open("interested_course_and_professors.csv", "w")
+    incap_file = open("interested_course_and_professors.csv", "w", newline='')
     incap_csv = csv.writer(incap_file)
     incap_csv.writerow(["interested_course_id", "professor"])
 
-    for ids in grouped_ids:
+    for iteration, ids in enumerate(grouped_ids):
+        print(f"Current ids: {ids} (iteration {iteration})")
         tasks = []
         for id in ids:
             tasks.append(download_departments.delay(id))
